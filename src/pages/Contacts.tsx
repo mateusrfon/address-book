@@ -7,26 +7,28 @@ const Contacts: React.FC = () => {
     const history = useHistory();
     const contactsContext = useContext(ContactsContext);
 
-    function newContact() {
+    function newContactPage() {
         history.push('/enrollment');
     }
 
-    function editContact(id: number) {
+    function editContactPage(id: number) {
         history.push(`/enrollment/${id}`);
     }
 
     return (
-        <Container>
-            {contactsContext?.contacts.map((contact, index) => (
-                <Card key={index} onClick={() => editContact(index)}>
-                    <div>Name: {contact.name}</div>
-                    <div>Birthdate: {contact.birthDate}</div>
-                    <div>E-mail: {contact.email}</div>
-                    <div>{`Address: ${contact.address.number}, ${contact.address.street}, ${contact.address.city}, ${contact.address.state} ${contact.address.zipCode}`}</div>
-                </Card>
-            ))}
-            <Button onClick={newContact}>+</Button>
-        </Container>
+        <>
+            <Container>
+                {contactsContext?.contacts.map((contact, index) => (
+                    <Card key={index} onClick={() => editContactPage(index)}>
+                        <div>Name: {contact.name}</div>
+                        <div>Birthdate: {contact.birthDate}</div>
+                        <div>E-mail: {contact.email}</div>
+                        <div>{`Address: ${contact.address.number}, ${contact.address.street}, ${contact.address.city}, ${contact.address.state} ${contact.address.zipCode}`}</div>
+                    </Card>
+                ))}
+            </Container>
+            <Button onClick={newContactPage}>+</Button>
+        </>
     );
 };
 
@@ -36,12 +38,13 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 80px;
 `;
 
 const Card = styled.div`
     width: 90%;
     background-color: white;
-    border-bottom: 5px solid #63a4ff;
+    border-bottom: 5px solid #ffa000;
     margin-bottom: 10px;
     padding: 10px;
 `;

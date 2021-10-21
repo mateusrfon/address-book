@@ -3,6 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import GlobalStyle from './styles/GlobalStyle';
 import ContactsContext from './contexts/ContactsContext';
 
+import Navbar from './components/Navbar';
 import Contacts from './pages/Contacts';
 import Enrollment from './pages/Enrollment';
 
@@ -14,6 +15,7 @@ const App: React.FC = () => {
             <GlobalStyle />
             <Switch>
                 <ContactsContext.Provider value={{ contacts, setContacts }}>
+                    <Navbar />
                     <Route exact path="/">
                         <Contacts />
                     </Route>
