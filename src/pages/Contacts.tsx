@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import ContactsContext from '../contexts/ContactsContext';
 
+import Container from '../styles/Container';
+
 const Contacts: React.FC = () => {
     const history = useHistory();
     const contactsContext = useContext(ContactsContext);
@@ -21,9 +23,13 @@ const Contacts: React.FC = () => {
                 {contactsContext?.contacts.map((contact, index) => (
                     <Card key={index} onClick={() => editContactPage(index)}>
                         <div>Name: {contact.name}</div>
-                        <div>Birthdate: {contact.birthDate}</div>
+                        <div>Birthdate: {contact.birthdate}</div>
                         <div>E-mail: {contact.email}</div>
-                        <div>{`Address: ${contact.address.number}, ${contact.address.street}, ${contact.address.city}, ${contact.address.state} ${contact.address.zipCode}`}</div>
+                        <div>{`Address: ${contact.address.street}, ${contact.address.number}, ${
+                            contact.address.city
+                        }, ${contact.address.state} ${contact.address.zipCode}${
+                            contact.address.complement ? `, ${contact.address.complement}` : ''
+                        }`}</div>
                     </Card>
                 ))}
             </Container>
@@ -33,13 +39,6 @@ const Contacts: React.FC = () => {
 };
 
 export default Contacts;
-
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 80px;
-`;
 
 const Card = styled.div`
     width: 90%;
