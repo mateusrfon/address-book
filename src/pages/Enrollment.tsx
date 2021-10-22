@@ -3,15 +3,21 @@ import { useParams, useHistory } from 'react-router-dom';
 import ContactsContext from '../contexts/ContactsContext';
 import styled from 'styled-components';
 
-import Container from '../styles/Container';
+import {
+    IoPersonSharp,
+    IoMailSharp,
+    IoBalloonSharp,
+    IoLocationSharp,
+    IoBackspaceOutline,
+    IoCheckboxOutline,
+} from 'react-icons/io5';
 
-interface Params {
-    id?: number;
-}
+import Container from '../styles/Container';
+import EnrollmentParams from '../interfaces/EnrollmentParams';
 
 const Enrollment: React.FC = () => {
     const contactsContext = useContext(ContactsContext);
-    const params = useParams() as Params;
+    const params = useParams() as EnrollmentParams;
     const history = useHistory();
 
     const [name, setName] = useState('');
@@ -71,7 +77,7 @@ const Enrollment: React.FC = () => {
             } else {
                 newContactsList.push(newContact);
             }
-            contactsContext?.setContacts(newContactsList);
+            contactsContext.setContacts(newContactsList);
         }
         history.push('/');
     }
@@ -90,10 +96,14 @@ const Enrollment: React.FC = () => {
 
     return (
         <Container>
-            <div style={{ width: '90%' }}>
+            <div>
+                <IoPersonSharp style={{ fontSize: 25, color: '#FFA000' }} />
                 <TextField placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                <IoMailSharp style={{ fontSize: 25, color: '#FFA000' }} />
                 <TextField placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <IoBalloonSharp style={{ fontSize: 25, color: '#FFA000' }} />
                 <TextField placeholder="Birthdate" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
+                <IoLocationSharp style={{ fontSize: 30, color: '#FFA000' }} />
                 <TextField placeholder="Zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
                 <TextField placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
                 <TextField placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
@@ -109,10 +119,14 @@ const Enrollment: React.FC = () => {
                     onChange={(e) => setComplement(e.target.value)}
                 />
             </div>
-            <div>
-                <button onClick={save}>Save</button>
-                <button onClick={cancel}>Cancel</button>
-            </div>
+            <ButtonContainer>
+                <button className="cancel" onClick={cancel}>
+                    <IoBackspaceOutline />
+                </button>
+                <button className="save" onClick={save}>
+                    <IoCheckboxOutline />
+                </button>
+            </ButtonContainer>
         </Container>
     );
 };
@@ -121,8 +135,32 @@ export default Enrollment;
 
 const TextField = styled.input`
     width: 100%;
-    height: 40px;
+    height: 50px;
     margin-bottom: 10px;
-    padding: 5px;
+    padding: 10px;
     border-radius: 5px;
+    font-size: 20px;
+`;
+
+const ButtonContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 10px;
+    button {
+        color: white;
+        font-size: 30px;
+        height: 50px;
+        width: 70px;
+        border-radius: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .cancel {
+        background-color: red;
+    }
+    .save {
+        background-color: green;
+    }
 `;

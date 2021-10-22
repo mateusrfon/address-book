@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import ContactsContext from '../contexts/ContactsContext';
+import { IoPersonSharp, IoMailSharp, IoBalloonSharp, IoLocationSharp } from 'react-icons/io5';
 
 import Container from '../styles/Container';
 
@@ -22,14 +23,28 @@ const Contacts: React.FC = () => {
             <Container>
                 {contactsContext?.contacts.map((contact, index) => (
                     <Card key={index} onClick={() => editContactPage(index)}>
-                        <div>Name: {contact.name}</div>
-                        <div>Birthdate: {contact.birthdate}</div>
-                        <div>E-mail: {contact.email}</div>
-                        <div>{`Address: ${contact.address.street}, ${contact.address.number}, ${
-                            contact.address.city
-                        }, ${contact.address.state} ${contact.address.zipCode}${
-                            contact.address.complement ? `, ${contact.address.complement}` : ''
-                        }`}</div>
+                        <div>
+                            <IoPersonSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
+                            <span>{contact.name}</span>
+                        </div>
+                        <div>
+                            <IoBalloonSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />{' '}
+                            <span>{contact.birthdate}</span>
+                        </div>
+
+                        <div>
+                            <IoMailSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
+                            <span>{contact.email}</span>
+                        </div>
+
+                        <div>
+                            <IoLocationSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 5 }} />
+                            <span>{`${contact.address.street}, ${contact.address.number}, ${contact.address.city}, ${
+                                contact.address.state
+                            } ${contact.address.zipCode}${
+                                contact.address.complement ? `, ${contact.address.complement}` : ''
+                            }`}</span>
+                        </div>
                     </Card>
                 ))}
             </Container>
@@ -41,11 +56,16 @@ const Contacts: React.FC = () => {
 export default Contacts;
 
 const Card = styled.div`
-    width: 90%;
+    width: 100%;
     background-color: white;
-    border-bottom: 5px solid #ffa000;
+    border-bottom: 5px solid #ffd149;
     margin-bottom: 10px;
     padding: 10px;
+    border-radius: 10px;
+    div {
+        display: flex;
+        align-items: center;
+    }
 `;
 
 const Button = styled.button`
