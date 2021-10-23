@@ -84,6 +84,11 @@ const Enrollment: React.FC = () => {
             } else {
                 newContactsList.push(newContact);
             }
+            newContactsList.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+            });
             contactsContext.setContacts(newContactsList);
             history.push('/');
         } else {
@@ -116,34 +121,50 @@ const Enrollment: React.FC = () => {
     return (
         <Container>
             <div>
-                <IoPersonSharp style={{ fontSize: 25, color: '#FFA000' }} />
-                <TextField placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
-                <IoMailSharp style={{ fontSize: 25, color: '#FFA000' }} />
-                <TextField placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <IoBalloonSharp style={{ fontSize: 25, color: '#FFA000' }} />
-                <TextField placeholder="Birthdate" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
-                <IoLocationSharp style={{ fontSize: 30, color: '#FFA000' }} />
-                <TextField
-                    placeholder="Zip code"
-                    value={zipCode}
-                    onChange={(e) => {
-                        if (e.target.value.length <= 8) setZipCode(e.target.value);
-                        if (e.target.value.length === 8) getAddress(e.target.value);
-                    }}
-                />
-                <TextField placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
-                <TextField placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-                <TextField placeholder="Street" value={street} onChange={(e) => setStreet(e.target.value)} />
-                <TextField
-                    placeholder="Address number"
-                    value={addressNumber}
-                    onChange={(e) => setAddressNumber(e.target.value)}
-                />
-                <TextField
-                    placeholder="Complement"
-                    value={complement}
-                    onChange={(e) => setComplement(e.target.value)}
-                />
+                <Set>
+                    <IoPersonSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 10 }} />
+                    <TextField placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                </Set>
+                <Set>
+                    <IoMailSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 10 }} />
+                    <TextField placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </Set>
+                <Set>
+                    <IoBalloonSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 10 }} />
+                    <TextField
+                        placeholder="Birthdate"
+                        value={birthdate}
+                        onChange={(e) => setBirthdate(e.target.value)}
+                    />
+                </Set>
+                <AddressSet>
+                    <div className="icon">
+                        <IoLocationSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 10 }} />
+                    </div>
+                    <div>
+                        <TextField
+                            placeholder="Zip code"
+                            value={zipCode}
+                            onChange={(e) => {
+                                if (e.target.value.length <= 8) setZipCode(e.target.value);
+                                if (e.target.value.length === 8) getAddress(e.target.value);
+                            }}
+                        />
+                        <TextField placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
+                        <TextField placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+                        <TextField placeholder="Street" value={street} onChange={(e) => setStreet(e.target.value)} />
+                        <TextField
+                            placeholder="Address number"
+                            value={addressNumber}
+                            onChange={(e) => setAddressNumber(e.target.value)}
+                        />
+                        <TextField
+                            placeholder="Complement"
+                            value={complement}
+                            onChange={(e) => setComplement(e.target.value)}
+                        />
+                    </div>
+                </AddressSet>
             </div>
             <ButtonContainer>
                 <button className="cancel" onClick={cancel}>
@@ -171,22 +192,35 @@ const TextField = styled.input`
 const ButtonContainer = styled.div`
     width: 100%;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     margin-top: 10px;
     button {
         color: white;
         font-size: 30px;
         height: 50px;
-        width: 70px;
+        width: 40%;
         border-radius: 5px;
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 20px;
     }
     .cancel {
         background-color: red;
     }
     .save {
         background-color: green;
+    }
+`;
+
+const Set = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
+const AddressSet = styled.div`
+    display: flex;
+    .icon {
+        margin-top: 10px;
     }
 `;

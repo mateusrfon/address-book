@@ -41,7 +41,9 @@ const Contacts: React.FC = () => {
                             </div>
 
                             <div>
-                                <IoLocationSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 5 }} />
+                                <div>
+                                    <IoLocationSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
+                                </div>
                                 <span>{`${street}, ${number}, ${city}, ${state} ${
                                     zipCode.substring(0, 5) + '-' + zipCode.substring(5)
                                 }${complement ? `, ${complement}` : ''}`}</span>
@@ -60,13 +62,13 @@ export default Contacts;
 const Card = styled.div`
     width: 100%;
     background-color: white;
-    border-bottom: 5px solid #ffd149;
+    border-bottom: 5px solid #63a4ff;
     margin-bottom: 10px;
     padding: 10px;
     border-radius: 10px;
     div {
         display: flex;
-        align-items: center;
+        margin-bottom: 5px;
     }
 `;
 
