@@ -5,7 +5,7 @@ import ContactsContext from './contexts/ContactsContext';
 
 import Navbar from './components/Navbar';
 import Contacts from './pages/Contacts';
-import Enrollment from './pages/Enrollment';
+import Enrollment from './pages/Enrollment/index';
 
 const App: React.FC = () => {
     const [contacts, setContacts] = useState(fakeContacts);

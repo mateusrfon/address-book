@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import ContactsContext from '../contexts/ContactsContext';
+import ContactsContext from '../../contexts/ContactsContext';
 import styled from 'styled-components';
+import axios from 'axios';
 
 import {
     IoPersonSharp,
@@ -12,8 +13,11 @@ import {
     IoCheckboxOutline,
 } from 'react-icons/io5';
 
-import Container from '../styles/Container';
-import EnrollmentParams from '../interfaces/EnrollmentParams';
+import ContactInterface from '../../interfaces/Contact';
+import ViacepInterface from '../../interfaces/Viacep';
+import Container from '../../styles/Container';
+import EnrollmentParams from '../../interfaces/EnrollmentParams';
+import checkContactDataError from './checkContactDataError';
 
 const Enrollment: React.FC = () => {
     const contactsContext = useContext(ContactsContext);
@@ -56,8 +60,8 @@ const Enrollment: React.FC = () => {
         history.push('/');
     }
 
-    function save() {
-        const newContact = {
+    function saveContact() {
+        const newContact: ContactInterface = {
             name,
             email,
             birthdate,
@@ -70,7 +74,10 @@ const Enrollment: React.FC = () => {
                 state,
             },
         };
-        if (contactsContext) {
+
+        const error = checkContactDataError(newContact);
+
+        if (contactsContext && !error) {
             const newContactsList = [...contactsContext.contacts];
             if (params.id !== undefined) {
                 newContactsList[params.id] = newContact;
@@ -78,8 +85,10 @@ const Enrollment: React.FC = () => {
                 newContactsList.push(newContact);
             }
             contactsContext.setContacts(newContactsList);
+            history.push('/');
+        } else {
+            alert(error);
         }
-        history.push('/');
     }
 
     function clearStates() {
@@ -94,6 +103,16 @@ const Enrollment: React.FC = () => {
         setComplement('');
     }
 
+    function getAddress(cep: string) {
+        axios.get(`http://viacep.com.br/ws/${cep}/json/`).then((res) => {
+            const { uf, localidade, logradouro, complemento } = res.data as ViacepInterface;
+            setState(uf);
+            setCity(localidade);
+            setStreet(logradouro);
+            setComplement(complemento);
+        });
+    }
+
     return (
         <Container>
             <div>
@@ -104,7 +123,14 @@ const Enrollment: React.FC = () => {
                 <IoBalloonSharp style={{ fontSize: 25, color: '#FFA000' }} />
                 <TextField placeholder="Birthdate" value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
                 <IoLocationSharp style={{ fontSize: 30, color: '#FFA000' }} />
-                <TextField placeholder="Zip code" value={zipCode} onChange={(e) => setZipCode(e.target.value)} />
+                <TextField
+                    placeholder="Zip code"
+                    value={zipCode}
+                    onChange={(e) => {
+                        if (e.target.value.length <= 8) setZipCode(e.target.value);
+                        if (e.target.value.length === 8) getAddress(e.target.value);
+                    }}
+                />
                 <TextField placeholder="State" value={state} onChange={(e) => setState(e.target.value)} />
                 <TextField placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
                 <TextField placeholder="Street" value={street} onChange={(e) => setStreet(e.target.value)} />
@@ -123,7 +149,7 @@ const Enrollment: React.FC = () => {
                 <button className="cancel" onClick={cancel}>
                     <IoBackspaceOutline />
                 </button>
-                <button className="save" onClick={save}>
+                <button className="save" onClick={saveContact}>
                     <IoCheckboxOutline />
                 </button>
             </ButtonContainer>

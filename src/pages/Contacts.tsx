@@ -21,32 +21,34 @@ const Contacts: React.FC = () => {
     return (
         <>
             <Container>
-                {contactsContext?.contacts.map((contact, index) => (
-                    <Card key={index} onClick={() => editContactPage(index)}>
-                        <div>
-                            <IoPersonSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
-                            <span>{contact.name}</span>
-                        </div>
-                        <div>
-                            <IoBalloonSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />{' '}
-                            <span>{contact.birthdate}</span>
-                        </div>
+                {contactsContext?.contacts.map((contact, index) => {
+                    const { name, birthdate, email, address } = contact;
+                    const { street, number, city, state, zipCode, complement } = address;
+                    return (
+                        <Card key={index} onClick={() => editContactPage(index)}>
+                            <div>
+                                <IoPersonSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
+                                <span>{name}</span>
+                            </div>
+                            <div>
+                                <IoBalloonSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />{' '}
+                                <span>{birthdate}</span>
+                            </div>
 
-                        <div>
-                            <IoMailSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
-                            <span>{contact.email}</span>
-                        </div>
+                            <div>
+                                <IoMailSharp style={{ fontSize: 20, color: '#FFA000', marginRight: 5 }} />
+                                <span>{email}</span>
+                            </div>
 
-                        <div>
-                            <IoLocationSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 5 }} />
-                            <span>{`${contact.address.street}, ${contact.address.number}, ${contact.address.city}, ${
-                                contact.address.state
-                            } ${contact.address.zipCode}${
-                                contact.address.complement ? `, ${contact.address.complement}` : ''
-                            }`}</span>
-                        </div>
-                    </Card>
-                ))}
+                            <div>
+                                <IoLocationSharp style={{ fontSize: 30, color: '#FFA000', marginRight: 5 }} />
+                                <span>{`${street}, ${number}, ${city}, ${state} ${
+                                    zipCode.substring(0, 5) + '-' + zipCode.substring(5)
+                                }${complement ? `, ${complement}` : ''}`}</span>
+                            </div>
+                        </Card>
+                    );
+                })}
             </Container>
             <Button onClick={newContactPage}>+</Button>
         </>
