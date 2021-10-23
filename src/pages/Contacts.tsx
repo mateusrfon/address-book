@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import ContactsContext from '../contexts/ContactsContext';
-import { IoPersonSharp, IoMailSharp, IoBalloonSharp, IoLocationSharp } from 'react-icons/io5';
+import { IoPersonSharp, IoMailSharp, IoBalloonSharp, IoLocationSharp, IoAddSharp } from 'react-icons/io5';
 
 import Container from '../styles/Container';
 
@@ -52,7 +52,9 @@ const Contacts: React.FC = () => {
                     );
                 })}
             </Container>
-            <Button onClick={newContactPage}>+</Button>
+            <Button onClick={newContactPage}>
+                <IoAddSharp />
+            </Button>
         </>
     );
 };
