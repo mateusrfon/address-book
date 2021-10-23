@@ -3,6 +3,7 @@ import { Switch, BrowserRouter as Router, Route } from 'react-router-dom';
 import GlobalStyle from './styles/GlobalStyle';
 import ContactsContext from './contexts/ContactsContext';
 
+import ContactInterface from './interfaces/Contact';
 import Navbar from './components/Navbar';
 import Contacts from './pages/Contacts';
 import Enrollment from './pages/Enrollment/index';
@@ -30,7 +31,7 @@ const App: React.FC = () => {
 
 export default App;
 
-const fakeContacts = [
+const fakeContacts: ContactInterface[] = [
     {
         name: 'Camila dos Santos Freire',
         email: 'camila.sf@gmail.com',
