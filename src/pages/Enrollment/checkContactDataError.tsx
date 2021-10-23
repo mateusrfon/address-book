@@ -1,7 +1,7 @@
 import ContactInterface from '../../interfaces/Contact';
 import * as contactSchema from '../../schemas/contactSchema';
 
-function checkContactDataError(contact: ContactInterface) {
+function checkContactDataError(contact: ContactInterface): string | null {
     if (contactSchema.name.validate(contact.name).error) {
         return 'Name is not allowed to be empty';
     }
